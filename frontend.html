@@ -11,13 +11,55 @@
 </head>
 <body>
 
-    <div>
-        <input id="buttonTest" class="btn" value="click" onclick=btnClick()>
-    </div>
 
-    <div class="tierlist">
-        <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/emme.png" style="width:100px; height:100px" onclick=function1()>
-        <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/st_mela.png" style="width:100px; height:100px" onclick=function2()>
+    <table class="table table-striped table-bordered" cellspacing="0" width="50%" margin="20px">
+       
+        <thead>
+            <tr>
+              <th class="th-sm">Fire
+              </th>
+              <th class="th-sm">Water
+              </th>
+              <th class="th-sm">Wind
+              </th>
+              <th class="th-sm">Thunder
+              </th>
+              <th class="th-sm">Light
+              </th>
+              <th class="th-sm">Dark
+              </th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+                <td id="fire">  
+                    <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/st_mela.png" 
+                         style="width:50px; height:50px"
+                         onclick=function2()
+                         border="1px solid white">
+                </td>
+              
+                <td>
+                    <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/cry_merl.png" style="width:50px; height:50px" onclick=>
+                </td>
+                <td>
+                    <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/ts_king.png" style="width:50px; height:50px" onclick=>
+                </td>
+                <td>
+                    <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/st_niku.png" style="width:50px; height:50px" onclick=>
+                </td>
+                <td>
+                    <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/emme.png" style="width:50px; height:50px" onclick=function1()>
+                </td>
+                <td>
+                    <img src="https://cdn.alchemistcodedb.com/file/bb-acdb/images/PortraitsM/tere.png" style="width:50px; height:50px" onclick=>
+                </td>
+            </tr>
+
+
+        </tbody>
     </div>
 
 
@@ -38,7 +80,6 @@
                 </th>
                 <th class="th-sm">Notes
                 </th>
-
               </tr>
             </thead>
 
@@ -51,21 +92,47 @@
                     <td id="goalshards1"></td>
                     <td id="notes1"></td>
                 </tr>
-
-
             </tbody>
         </table>          
-
     </div>
+
+
+               <!-- Hidden SQL Manager -->
+               <div id="tableManager" class="modal fade">
+                <div class="modal-dialog">
+                    <!-- Fills in space in the back with white background -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="title">New Transaction</h2>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="text" class="form-control" placeholder="Item Name..." id="itemName">
+                            <br>
+                            <textarea class="form-control" id="location" placeholder="Location"></textarea>
+                            <br>
+                            <textarea class="form-control" id="pPoint" placeholder="Pickup Point"></textarea>
+                            <br>
+                            <input type="hidden" id="editRowID" value="0">
+                        </div>
+
+                        <!-- Button separated from textareas in its own divider -->
+                        <div class="modal-footer">
+                            <input type="button" id="manageBtn" onclick="manageData('addNew')" value="Save" class="btn btn-success">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 </body>
 
 <!-- <script type="text/javascript" src="program.js"></script> -->
 <script type="text/javascript"> 
 
 $("#buttonTest").append("Working")
-
 function btnClick() {
     //console.log($("#kaigan1").attr('value'));
+    $("#tableManager").modal('show');
     let kaiganArr = $("#kaigan1").html().split("/")
     let kaiganGoalArr = $("#goalkaigan1").html().split("/")
     let shardInput = "#goalshards1"
@@ -83,27 +150,30 @@ function calcShards(kaiganArr, kaiganGoalArr, shardInput) {
     $(shardInput).html(something1 - something)
 }
 
+/*
+Converts Shards values to amount of shards needed for each gate
+*/
 function kaiganConv(arr) {
     for(let i = 0; i < arr.length; i++) {
         switch(arr[i]) {
-            case "0": arr[i] = 0;
+            case "0": arr[i] = 0
             break;
-            case "1": arr[i] = 5;
+            case "1": arr[i] = 5
             break;
-            case "2": arr[i] = 15;
+            case "2": arr[i] = 15
             break;
-            case "3": arr[i] = 30;
+            case "3": arr[i] = 30
             break;
-            case "4": arr[i] = 50;
+            case "4": arr[i] = 50
             break;
         }
         //5 Gate Values
         if(arr[i] === "5") {
-            if(i === 0) arr[i] = 80;
-            if(i === 1) arr[i] = 100;
-            if(i === 2) arr[i] = 90;
-            if(i === 3) arr[i] = 90;
-            if(i === 4) arr[i] = 100;
+            if(i === 0) arr[i] = 80
+            if(i === 1) arr[i] = 100
+            if(i === 2) arr[i] = 90
+            if(i === 3) arr[i] = 90
+            if(i === 4) arr[i] = 100
         }
     }
     console.log(arr);
@@ -112,8 +182,8 @@ function kaiganConv(arr) {
 
 function function1(){
  $("#name1").html("Emmel")
- $("#kaigan1").html("5/5/0/0/0")
- $("#goalkaigan1").html("5/5/0/0/0")
+ $("#kaigan1").html("5/5")
+ $("#goalkaigan1").html("5/5")
  $("#shards1").html("3")
 
  btnClick()
@@ -121,8 +191,8 @@ function function1(){
 
 function function2(){
  $("#name1").html("Mira")
- $("#kaigan1").html("5/2/0/0/0")
- $("#goalkaigan1").html("5/5/0/0/0")
+ $("#kaigan1").html("5/2")
+ $("#goalkaigan1").html("5/5")
  $("#shards1").html("3")
 
  btnClick()
